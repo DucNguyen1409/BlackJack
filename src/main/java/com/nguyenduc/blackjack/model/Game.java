@@ -15,14 +15,15 @@ import java.util.List;
 @NoArgsConstructor
 @Document(collection = "game")
 public class Game {
+
     @Id
-    private long id;
+    private String id;
 
-    private String nameOfGame;
+    private String name;
 
-    private List<String> players;
+    private List<Player> players;
 
-    private String dealer;
+    private int dealerIndex;
 
     private int pointTurn;
 

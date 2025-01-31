@@ -1,6 +1,7 @@
 package com.nguyenduc.blackjack.service.impl;
 
 import com.nguyenduc.blackjack.dto.GameDto;
+import com.nguyenduc.blackjack.exception.ResourceNotFoundException;
 import com.nguyenduc.blackjack.mapper.GameMapper;
 import com.nguyenduc.blackjack.model.Game;
 import com.nguyenduc.blackjack.repository.GameRepository;
@@ -27,23 +28,31 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public GameDto updateGame(GameDto dto) {
-        return null;
+    public GameDto updateGame(GameDto dto) throws ResourceNotFoundException {
+        // existed check
+        Game existsById = gameRepository.findById(dto.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy ván chơi"));
+        Game entity = gameMapper.toEntity(dto);
+        entity.setId(existsById.getId());
+
+        // update game
+        Game result = gameRepository.save(entity);
+        return gameMapper.toDto(result);
     }
 
     @Override
-    public GameDto getGameDetailsById(Long id) {
+    public GameDto getGameDetailsById(String id) {
         Game gameById = gameRepository.findById(id)
-                .orElse(new Game());
+                .orElseThrow();
         return gameMapper.toDto(gameById);
     }
 
     @Override
-    public List<GameDto> getAllGame() {
+    public List<GameDto> getAllGame() throws ResourceNotFoundException {
         List<Game> results = gameRepository.findAll();
         // empty check
         if (CollectionUtils.isEmpty(results)) {
-            throw new IllegalStateException("No game created!!!");
+            throw new ResourceNotFoundException("không có ván chơi nào");
         }
 
         return results.stream()
@@ -52,9 +61,10 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public void deleteGame(Long id) {
-        gameRepository.findById(id)
-                .ifPresent(game -> gameRepository.deleteById(game.getId()));
+    public void deleteGame(String id) throws ResourceNotFoundException {
+        Game result = gameRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy ván chơi"));
+        gameRepository.deleteById(result.getId());
     }
 
     @Override

@@ -1,5 +1,9 @@
 package com.nguyenduc.blackjack.dto;
 
+import com.nguyenduc.blackjack.constaint.PlayersConstraint;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,16 +17,23 @@ import java.util.List;
 @NoArgsConstructor
 public class GameDto {
 
-    private String nameOfGame;
+    private String id;
 
-    private List<String> players;
+    private String name;
 
-    private String dealer;
+    @PlayersConstraint
+    private List<PlayerDto> players;
 
+    @NotNull(message = "Cần chọn nhà cái")
+    private int dealerIndex;
+
+    @Min(value = 1, message = "Cần chọn điểm")
     private int pointTurn;
 
+    @Min(value = 1, message = "Cần chọn điểm")
     private int winPointsBlackJack;
 
+    @Min(value = 1, message = "Cần chọn điểm")
     private int winPointsFiveCardCharlie;
 
 }
