@@ -1,0 +1,9 @@
+spring:
+  data:
+    mongodb:
+      username: root
+      password: root
+      hosts: localhost
+      port: 27017
+      database: blackjack
+      authentication-database: admin

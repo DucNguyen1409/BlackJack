@@ -1,6 +1,6 @@
-package com.nguyenduc.ghidiem.repository;
+package com.nguyenduc.blackjack.repository;
 
-import com.nguyenduc.ghidiem.model.Game;
+import com.nguyenduc.blackjack.model.Game;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface GameRepository extends MongoRepository<Game, Long> {

@@ -1,4 +1,4 @@
-package com.nguyenduc.ghidiem.model;
+package com.nguyenduc.blackjack.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
