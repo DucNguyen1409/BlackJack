@@ -23,7 +23,7 @@ public class Game {
 
     private List<Player> players;
 
-    private int dealerIndex;
+    private int dealerId;
 
     private int pointTurn;
 

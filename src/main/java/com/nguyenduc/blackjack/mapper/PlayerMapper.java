@@ -22,14 +22,14 @@ public class PlayerMapper {
 
     public PlayerDto toDto(Player entity) {
         return PlayerDto.builder()
-                .index(entity.getIndex())
+                .id(entity.getId())
                 .name(entity.getName())
                 .build();
     }
 
     public Player toEntity(PlayerDto dto) {
         return Player.builder()
-                .index(dto.getIndex())
+                .id(dto.getId())
                 .name(dto.getName())
                 .build();
     }

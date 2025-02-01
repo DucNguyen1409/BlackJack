@@ -20,13 +20,13 @@ public class GameController {
 
     @GetMapping("/{id}")
     public ResponseEntity<GameDto> getGameDetailsById(@PathVariable(value = "id") String id) {
-        GameDto result = gameService.getGameDetailsById(id);
+        GameDto result = gameService.findGameDetailsById(id);
         return ResponseEntity.ok(result);
     }
 
     @GetMapping
-    public ResponseEntity<List<GameDto>> getAllGame() throws ResourceNotFoundException {
-        List<GameDto> results = gameService.getAllGame();
+    public ResponseEntity<List<GameDto>> findAll() throws ResourceNotFoundException {
+        List<GameDto> results = gameService.findAll();
         return ResponseEntity.ok(results);
     }
 
@@ -42,9 +42,10 @@ public class GameController {
         return ResponseEntity.accepted().build();
     }
 
-    @PutMapping
-    public ResponseEntity<GameDto> updateGame(@Valid @RequestBody GameDto dto) throws ResourceNotFoundException {
-        GameDto result = gameService.updateGame(dto);
+    @PutMapping("/{id}")
+    public ResponseEntity<GameDto> updateGame(@PathVariable(value = "id") String id,
+                                              @Valid @RequestBody GameDto dto) throws ResourceNotFoundException {
+        GameDto result = gameService.updateGame(id, dto);
         return ResponseEntity.ok(result);
     }
 

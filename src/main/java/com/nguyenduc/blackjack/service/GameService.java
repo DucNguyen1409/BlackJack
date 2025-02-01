@@ -7,9 +7,8 @@ import java.util.List;
 
 public interface GameService {
     GameDto createNewGame(GameDto dto);
-    GameDto updateGame(GameDto dto) throws ResourceNotFoundException;
-    GameDto getGameDetailsById(String id);
-    List<GameDto> getAllGame() throws ResourceNotFoundException;
+    GameDto updateGame(String id, GameDto dto) throws ResourceNotFoundException;
+    GameDto findGameDetailsById(String id);
+    List<GameDto> findAll() throws ResourceNotFoundException;
     void deleteGame(String id) throws ResourceNotFoundException;
-    void updatePoint();
 }

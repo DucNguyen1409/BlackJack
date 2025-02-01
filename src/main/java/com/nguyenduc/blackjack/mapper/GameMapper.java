@@ -12,12 +12,13 @@ import org.springframework.stereotype.Component;
 public class GameMapper {
 
     private final PlayerMapper playerMapper;
+
     public GameDto toDto(Game entity) {
         return GameDto.builder()
                 .id(entity.getId())
                 .name(entity.getName())
                 .players(playerMapper.toDtos(entity.getPlayers()))
-                .dealerIndex(entity.getDealerIndex())
+                .dealerId(entity.getDealerId())
                 .pointTurn(entity.getPointTurn())
                 .winPointsBlackJack(entity.getWinPointsBlackJack())
                 .winPointsFiveCardCharlie(entity.getWinPointsFiveCardCharlie())
@@ -28,7 +29,7 @@ public class GameMapper {
         return Game.builder()
                 .name(defaultGameNameIfEmpty(dto.getName()))
                 .players(playerMapper.toEntities(dto.getPlayers()))
-                .dealerIndex(dto.getDealerIndex())
+                .dealerId(dto.getDealerId())
                 .pointTurn(dto.getPointTurn())
                 .winPointsBlackJack(dto.getWinPointsBlackJack())
                 .winPointsFiveCardCharlie(dto.getWinPointsFiveCardCharlie())

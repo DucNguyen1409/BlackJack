@@ -1,22 +1,18 @@
 package com.nguyenduc.blackjack.model;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
 @AllArgsConstructor
-@Document(collection = "player")
+@NoArgsConstructor
 public class Player {
 
-    @NotNull(message = "Trống vị trí người chơi")
-    private int index;
+    private int id;
 
-    @NotBlank(message = "Tên người chơi không được trống")
     private String name;
 
     private int point;

@@ -28,9 +28,9 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public GameDto updateGame(GameDto dto) throws ResourceNotFoundException {
+    public GameDto updateGame(String id, GameDto dto) throws ResourceNotFoundException {
         // existed check
-        Game existsById = gameRepository.findById(dto.getId())
+        Game existsById = gameRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy ván chơi"));
         Game entity = gameMapper.toEntity(dto);
         entity.setId(existsById.getId());
@@ -41,14 +41,14 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public GameDto getGameDetailsById(String id) {
+    public GameDto findGameDetailsById(String id) {
         Game gameById = gameRepository.findById(id)
                 .orElseThrow();
         return gameMapper.toDto(gameById);
     }
 
     @Override
-    public List<GameDto> getAllGame() throws ResourceNotFoundException {
+    public List<GameDto> findAll() throws ResourceNotFoundException {
         List<Game> results = gameRepository.findAll();
         // empty check
         if (CollectionUtils.isEmpty(results)) {
@@ -65,11 +65,6 @@ public class GameServiceImpl implements GameService {
         Game result = gameRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy ván chơi"));
         gameRepository.deleteById(result.getId());
-    }
-
-    @Override
-    public void updatePoint() {
-        //todo
     }
 
 }
