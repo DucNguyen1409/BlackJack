@@ -25,9 +25,5 @@ public class Game {
 
     private int dealerId;
 
-    private int pointTurn;
-
-    private int winPointsBlackJack;
-
-    private int winPointsFiveCardCharlie;
+    private SettingGame settingGame;
 }

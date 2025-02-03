@@ -18,6 +18,4 @@ public class PlayerDto {
 
     @NotBlank(message = "Tên người chơi không được trống")
     private String name;
-
-    private int point = 0;
 }

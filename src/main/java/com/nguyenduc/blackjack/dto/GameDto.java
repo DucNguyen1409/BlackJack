@@ -15,26 +15,20 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Valid
 public class GameDto {
 
     private String id;
 
     private String name;
 
-    @Valid
+//    @Valid
     @PlayersConstraint
     private List<PlayerDto> players;
 
     @NotNull(message = "Cần chọn nhà cái")
     private int dealerId;
 
-    @Min(value = 1, message = "Cần chọn điểm")
-    private int pointTurn;
-
-    @Min(value = 1, message = "Cần chọn điểm")
-    private int winPointsBlackJack;
-
-    @Min(value = 1, message = "Cần chọn điểm")
-    private int winPointsFiveCardCharlie;
+    private SettingGameDto settingGame;
 
 }
