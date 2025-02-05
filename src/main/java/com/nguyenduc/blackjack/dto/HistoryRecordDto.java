@@ -1,5 +1,6 @@
 package com.nguyenduc.blackjack.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HistoryRecordDto {
+    @NotNull(message = "GameID không được trống")
     private String gameId;
     private List<PlayerRecordDto> playerRecordDtos;
 }

@@ -37,7 +37,7 @@ public class ActivityHistoryController {
         return new ResponseEntity<>(history, HttpStatus.CREATED);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<ActivityHistoryDto> updateHistory(@PathVariable("id") String id,
                                                             @Valid @RequestBody ActivityHistoryDto dto)
             throws ResourceNotFoundException {

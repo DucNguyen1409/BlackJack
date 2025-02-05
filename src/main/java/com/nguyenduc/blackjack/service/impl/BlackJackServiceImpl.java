@@ -1,7 +1,6 @@
 package com.nguyenduc.blackjack.service.impl;
 
 import com.nguyenduc.blackjack.dto.BlackJackResult;
-import com.nguyenduc.blackjack.dto.GameDto;
 import com.nguyenduc.blackjack.dto.HistoryRecordDto;
 import com.nguyenduc.blackjack.dto.PlayerRecordDto;
 import com.nguyenduc.blackjack.exception.ResourceNotFoundException;
@@ -27,13 +26,14 @@ public class BlackJackServiceImpl implements BlackJackService {
 
     @Override
     public ActivityHistory calculateResult(HistoryRecordDto historyRecordDto) throws ResourceNotFoundException {
-        // lấy thông tin cài đặt game (điểm số cài đặt)
+        // Get setting game (point)
         Game gameById = gameRepository.findById(historyRecordDto.getGameId())
                 .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy ván chơi"));
 
-        // kiểm tra đã có lịch sử chơi (lấy điểm init)
-        ActivityHistory activityHistory = activityHistoryRepository.findByGameId(historyRecordDto.getGameId())
+        // Check activity history (get init point)
+        ActivityHistory activityHistoryOld = activityHistoryRepository.findFirstByGameIdOrderByCreatedDateDesc(historyRecordDto.getGameId())
                 .orElse(new ActivityHistory(gameById));
+        ActivityHistory activityHistory = new ActivityHistory(gameById);
 
         // get Map of playerID and result
         Map<Integer ,BlackJackResult> playerBlackJackResultMap = historyRecordDto.getPlayerRecordDtos().stream()
@@ -41,26 +41,28 @@ public class BlackJackServiceImpl implements BlackJackService {
 
         int totalPoints = 0;
         // update all player point
-        for (PlayerHistory history : activityHistory.getPlayerHistories()) {
+        for (PlayerHistory history : activityHistoryOld.getPlayerHistories()) {
             if (history.getId() != gameById.getDealerId()) {
                 BlackJackResult blackJackResult = playerBlackJackResultMap.get(history.getId());
                 int newPoint = getPlayerPoint(history.getPoint(), blackJackResult, gameById.getSettingGame());
                 history.setPoint(newPoint);
+                history.setBlackJackResult(blackJackResult);
                 totalPoints += newPoint;
             }
         }
 
         // update dealer point
-        for (PlayerHistory history : activityHistory.getPlayerHistories()) {
+        for (PlayerHistory history : activityHistoryOld.getPlayerHistories()) {
             if (history.getId() == gameById.getDealerId()) {
-                history.setPoint(totalPoints);
+                history.setPoint(Math.negateExact(totalPoints));
+                history.setBlackJackResult(playerBlackJackResultMap.get(history.getId()));
             }
         }
 
-        // lưu thông tin ActivityHistory
+        // Save ActivityHistory
         activityHistory.setGameId(historyRecordDto.getGameId());
-        activityHistory.setPlayerHistories(activityHistory.getPlayerHistories());
-        activityHistory.setTurnNumber(activityHistory.getTurnNumber() + 1);
+        activityHistory.setPlayerHistories(activityHistoryOld.getPlayerHistories());
+        activityHistory.setTurnNumber(activityHistoryOld.getTurnNumber() + 1);
         return activityHistoryRepository.save(activityHistory);
     }
 

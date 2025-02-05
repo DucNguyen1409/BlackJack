@@ -9,21 +9,23 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ActivityHistoryMapper {
 
-    private final PlayerMapper playerMapper;
+    private final PlayerHistoryMapper playerHistoryMapper;
 
     public ActivityHistoryDto toDto(ActivityHistory entity) {
         return ActivityHistoryDto.builder()
                 .id(entity.getId())
+                .gameId(entity.getGameId())
                 .turnNumber(entity.getTurnNumber())
-//                .players(playerMapper.toDtos(entity.setPlayerHistories())
+                .playerHistories(playerHistoryMapper.toDtos(entity.getPlayerHistories()))
                 .createdDate(entity.getCreatedDate())
                 .build();
     }
 
     public ActivityHistory toEntity(ActivityHistoryDto dto) {
         return ActivityHistory.builder()
+                .gameId(dto.getGameId())
                 .turnNumber(dto.getTurnNumber())
-//                .players(playerMapper.toEntities(dto.getPlayers()))
+                .playerHistories(playerHistoryMapper.toEntities(dto.getPlayerHistories()))
                 .createdDate(dto.getCreatedDate())
                 .build();
     }

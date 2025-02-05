@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface ActivityHistoryRepository extends MongoRepository<ActivityHistory, String> {
     Optional<ActivityHistory> findByGameId(String gameId);
+    Optional<ActivityHistory> findFirstByGameIdOrderByCreatedDateDesc(String gameId);
 }

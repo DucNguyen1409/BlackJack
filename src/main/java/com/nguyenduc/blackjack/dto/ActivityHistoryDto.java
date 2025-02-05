@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -24,7 +23,7 @@ public class ActivityHistoryDto {
     private int turnNumber;
 
     @NotNull(message = "Người chơi không được trống")
-    private List<PlayerDto> players;
+    private List<PlayerHistoryDto> playerHistories;
 
     private LocalDateTime createdDate;
 }

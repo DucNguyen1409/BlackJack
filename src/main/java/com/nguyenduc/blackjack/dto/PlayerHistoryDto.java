@@ -13,4 +13,5 @@ public class PlayerHistoryDto {
     private int id;
     private String name;
     private int point;
+    private BlackJackResult blackJackResult;
 }
