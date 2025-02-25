@@ -10,6 +10,7 @@ import java.util.List;
 public interface ActivityHistoryService {
     List<ActivityHistoryDto> findAll() throws ResourceNotFoundException;
     ActivityHistoryDto findById(String id);
+    List<ActivityHistoryDto> findByGameId(String gameId);
     ActivityHistoryDto createActivityHistory(HistoryRecordDto dto) throws BlackJackResultNotValid, ResourceNotFoundException;
     ActivityHistoryDto updateActivityHistory(String id, ActivityHistoryDto dto) throws ResourceNotFoundException;
 }

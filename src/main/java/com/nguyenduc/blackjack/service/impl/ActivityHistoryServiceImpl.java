@@ -44,6 +44,14 @@ public class ActivityHistoryServiceImpl implements ActivityHistoryService {
     }
 
     @Override
+    public List<ActivityHistoryDto> findByGameId(String gameId) {
+        List<ActivityHistory> activityHistoryByGameIdList = activityHistoryRepository.findByGameId(gameId);
+        return activityHistoryByGameIdList.stream()
+                .map(activityHistoryMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public ActivityHistoryDto createActivityHistory(HistoryRecordDto dto)
             throws BlackJackResultNotValid, ResourceNotFoundException {
         return activityHistoryMapper.toDto(blackJackService.calculateResult(dto));

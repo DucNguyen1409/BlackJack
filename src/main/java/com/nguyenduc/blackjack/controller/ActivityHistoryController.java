@@ -30,6 +30,11 @@ public class ActivityHistoryController {
         return ResponseEntity.ok(activityHistoryService.findById(id));
     }
 
+    @GetMapping("/gameId/{gameId}")
+    public ResponseEntity<List<ActivityHistoryDto>> findByGameId(@PathVariable("gameId") String gameId) {
+        return ResponseEntity.ok(activityHistoryService.findByGameId(gameId));
+    }
+
     @PostMapping
     public ResponseEntity<ActivityHistoryDto> createHistory(@Valid @RequestBody HistoryRecordDto dto)
             throws BlackJackResultNotValid, ResourceNotFoundException {
