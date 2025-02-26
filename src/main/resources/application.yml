@@ -1,9 +1,7 @@
+server:
+  port: 9090
 spring:
   data:
     mongodb:
-      username: root
-      password: root
-      hosts: localhost
-      port: 27017
-      database: blackjack
-      authentication-database: admin
+      uri: mongodb+srv://1409nguyenduc:P4XNQNZFG0Gd2Yxm@ghidiem.zpn1q.mongodb.net/?retryWrites=true&w=majority&appName=ghidiem
+      database: ghidiem
